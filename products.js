@@ -10,9 +10,9 @@
   Значок (art) на выбор: glove, mma, shin, wrap, guard, head, shorts, bag, pads
 */
 
-var SHOP = "Клинч";
-var PHONE = "+7 (900) 000-00-00";
-var PHONE_RAW = "+79000000000";
+var SHOP = "Vortex";
+var PHONE = "+7 (912) 648-39-09";
+var PHONE_RAW = "+79126483909";
 
 var CATS = ["Все", "Бокс", "ММА", "Кикбоксинг", "Муай-тай"];
 
