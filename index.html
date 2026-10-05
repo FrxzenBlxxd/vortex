@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Клинч экипировка</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600&family=Big+Shoulders+Display:wght@700;800&display=swap">
+<style>
+body{margin:0}
+/* Layout: узкая шапка с телефоном, короткий вводный блок с фильтром по дисциплинам, сетка карточек, панель заказа по телефону */
+:root {
+  --bg: #eceeec;
+  --surface: #f8f9f8;
+  --fg: #12161a;
+  --muted: #5a6269;
+  --line: #cfd3d1;
+  --accent: #f1bf2b;
+  --on-accent: #12161a;
+  --tile: #dfe3e1;
+  --art: #12161a;
+  --font-display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --font-body: "Barlow", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-util: "Barlow Condensed", "Arial Narrow", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1317;
+    --surface: #171c21;
+    --fg: #eef0ee;
+    --muted: #9aa3aa;
+    --line: #2a3138;
+    --accent: #f1bf2b;
+    --on-accent: #12161a;
+    --tile: #1f262c;
+    --art: #eef0ee;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1317;
+  --surface: #171c21;
+  --fg: #eef0ee;
+  --muted: #9aa3aa;
+  --line: #2a3138;
+  --accent: #f1bf2b;
+  --on-accent: #12161a;
+  --tile: #1f262c;
+  --art: #eef0ee;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  padding-inline: 16px;
+  padding-block: 0 48px;
+}
+.wrap { max-width: 1120px; margin-inline: auto; }
+
+/* Шапка */
+.top {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding-block: 14px; border-bottom: 2px solid var(--fg);
+}
+.brand { font-family: var(--font-display); font-weight: 800; font-size: 30px; letter-spacing: .04em; text-transform: uppercase; line-height: 1; }
+.brand span { color: var(--muted); font-weight: 700; font-size: 14px; letter-spacing: .14em; margin-left: 10px; font-family: var(--font-util); }
+.phone-link {
+  font-family: var(--font-util); font-weight: 600; font-size: 20px; letter-spacing: .02em;
+  color: var(--fg); text-decoration: none; white-space: nowrap;
+}
+
+/* Вводный блок */
+.intro { padding-block: 36px 24px; display: grid; gap: 20px; }
+.intro h1 {
+  font-family: var(--font-display); font-weight: 800; text-transform: uppercase;
+  font-size: clamp(40px, 8vw, 84px); line-height: .95; letter-spacing: .01em; margin: 0; text-wrap: balance; max-width: 14ch;
+}
+.intro p { margin: 0; max-width: 56ch; color: var(--muted); font-size: 17px; }
+
+/* Фильтр */
+.filters { display: flex; flex-wrap: wrap; gap: 8px; padding-block: 4px 24px; }
+.chip {
+  font-family: var(--font-util); font-weight: 600; font-size: 18px; letter-spacing: .06em; text-transform: uppercase;
+  background: transparent; color: var(--fg); border: 2px solid var(--fg); padding: 6px 16px; cursor: pointer; border-radius: 0;
+}
+.chip[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+.chip:focus-visible, .btn:focus-visible, .close:focus-visible, .copy:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+/* Сетка */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+.card { background: var(--surface); border: 1px solid var(--line); display: flex; flex-direction: column; min-width: 0; }
+.pic { background: var(--tile); aspect-ratio: 4 / 3; display: grid; place-items: center; color: var(--art); position: relative; }
+.pic svg { width: 46%; max-width: 150px; height: auto; }
+.pic img.ph { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; }
+.tag {
+  position: absolute; top: 10px; left: 10px; font-family: var(--font-util); font-weight: 600; font-size: 14px;
+  letter-spacing: .1em; text-transform: uppercase; z-index: 1; background: var(--accent); color: var(--on-accent); padding: 2px 8px;
+}
+.body { padding: 16px; display: flex; flex-direction: column; gap: 12px; flex: 1; min-width: 0; }
+.body h2 { font-family: var(--font-display); font-weight: 700; font-size: 24px; line-height: 1.1; margin: 0; text-wrap: balance; }
+.specs { margin: 0; display: grid; gap: 4px; font-size: 14px; }
+.specs div { display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px dashed var(--line); padding-bottom: 4px; }
+.specs dt { color: var(--muted); }
+.specs dd { margin: 0; text-align: right; font-weight: 500; min-width: 0; }
+.buy { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 8px; flex-wrap: wrap; }
+.price { font-family: var(--font-display); font-weight: 800; font-size: 30px; line-height: 1; font-variant-numeric: tabular-nums; }
+.btn {
+  font-family: var(--font-util); font-weight: 600; font-size: 18px; letter-spacing: .06em; text-transform: uppercase;
+  background: var(--accent); color: var(--on-accent); border: 2px solid var(--accent); padding: 8px 18px; cursor: pointer; border-radius: 0;
+}
+.btn:hover { background: var(--fg); border-color: var(--fg); color: var(--bg); }
+.empty { color: var(--muted); padding-block: 32px; }
+
+.how { margin-top: 48px; padding-top: 20px; border-top: 2px solid var(--fg); display: grid; gap: 8px; max-width: 60ch; }
+.how h3 { font-family: var(--font-display); font-size: 26px; text-transform: uppercase; margin: 0; }
+.how p { margin: 0; color: var(--muted); }
+
+/* Панель заказа */
+.overlay { position: fixed; inset: 0; background: rgba(8, 10, 12, .6); display: grid; place-items: center; padding: 16px; z-index: 10; }
+.panel { background: var(--surface); color: var(--fg); border: 2px solid var(--fg); width: min(440px, 100%); padding: 22px; display: grid; gap: 14px; position: relative; }
+.panel h4 { font-family: var(--font-display); font-size: 28px; line-height: 1.1; margin: 0; padding-right: 36px; }
+.panel .sum { color: var(--muted); margin: 0; }
+.num { font-family: var(--font-display); font-weight: 800; font-size: clamp(30px, 8vw, 40px); letter-spacing: .02em; user-select: all; font-variant-numeric: tabular-nums; }
+.row { display: flex; flex-wrap: wrap; gap: 10px; }
+.copy, .call {
+  font-family: var(--font-util); font-weight: 600; font-size: 18px; letter-spacing: .06em; text-transform: uppercase;
+  padding: 8px 18px; cursor: pointer; border-radius: 0; text-decoration: none; display: inline-block;
+}
+.copy { background: transparent; color: var(--fg); border: 2px solid var(--fg); }
+.call { background: var(--accent); color: var(--on-accent); border: 2px solid var(--accent); }
+.hint { font-size: 13px; color: var(--muted); margin: 0; }
+.close { position: absolute; top: 10px; right: 10px; width: 36px; height: 36px; border: 0; background: transparent; color: var(--fg); font-size: 26px; line-height: 1; cursor: pointer; }
+.theme-note { display: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .card { transition: transform .15s ease; }
+  .card:hover { transform: translateY(-3px); }
+}
+@media (max-width: 480px) {
+  .brand span { display: none; }
+}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">Клинч<span>экипировка для единоборств</span></div>
+    <a class="phone-link" id="topPhone" href="#">+7 (900) 000-00-00</a>
+  </header>
+
+  <section class="intro">
+    <h1>Экипировка для ринга и клетки</h1>
+    <p>Бокс, ММА, кикбоксинг, муай-тай. Выберите модель, посмотрите характеристики и позвоните: подскажем размер и наличие.</p>
+  </section>
+
+  <div class="filters" id="filters" role="group" aria-label="Дисциплина"></div>
+  <main class="grid" id="grid"></main>
+
+  <section class="how">
+    <h3>Как заказать</h3>
+    <p>Нажмите «Заказать» у нужной модели и позвоните по номеру. Назовите модель и размер, остальное уточним по телефону.</p>
+  </section>
+</div>
+
+<div class="overlay" id="overlay" hidden>
+  <div class="panel" role="dialog" aria-modal="true" aria-labelledby="pTitle">
+    <button class="close" id="closeBtn" aria-label="Закрыть">×</button>
+    <h4 id="pTitle"></h4>
+    <p class="sum" id="pSum"></p>
+    <div class="num" id="pNum"></div>
+    <div class="row">
+      <a class="call" id="pCall" href="#">Позвонить</a>
+      <button class="copy" id="copyBtn" type="button">Скопировать номер</button>
+    </div>
+    <p class="hint" id="hint">Если звонок не открылся, наберите номер вручную.</p>
+  </div>
+</div>
+
+<script src="products.js"></script>
+<script>
+var ART = {
+  glove: '<svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"><path d="M34 62c0-22 12-38 32-38s28 14 28 30c0 8-3 14-3 20v8H42v-8c-4-4-8-8-8-12z"/><path d="M42 82h46v18H42z"/><path d="M58 40c8-4 20 0 22 10"/></svg>',
+  mma: '<svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"><path d="M30 58c0-18 10-30 28-30s30 10 30 28v22c0 6-4 10-10 10H42c-8 0-12-6-12-12z"/><path d="M36 92h52v14H36z"/><path d="M44 28v26M58 26v28M72 28v26"/></svg>',
+  shin: '<svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"><path d="M44 16h32l6 70c0 10-8 18-22 18s-22-8-22-18z"/><path d="M48 40h24M47 58h26M48 76h24"/></svg>',
+  wrap: '<svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"><circle cx="60" cy="60" r="38"/><circle cx="60" cy="60" r="24"/><circle cx="60" cy="60" r="10"/><path d="M98 60h14"/></svg>',
+  guard: '<svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"><path d="M16 50c10-22 78-22 88 0-4 22-24 36-44 36S20 72 16 50z"/><path d="M34 54h52M40 66h40"/></svg>',
+  head: '<svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"><path d="M24 70c0-30 14-48 36-48s36 18 36 48v16H78l-6-10H48l-6 10H24z"/><path d="M42 48h36M40 62h40"/></svg>',
+  shorts: '<svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"><path d="M26 28h68l8 62H66L60 60l-6 30H18z"/><path d="M26 40h68"/></svg>',
+  bag: '<svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"><path d="M60 6v14M40 6h40"/><rect x="38" y="20" width="44" height="88" rx="10"/><path d="M38 44h44M38 84h44"/></svg>',
+  pads: '<svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"><rect x="26" y="22" width="68" height="76" rx="22"/><circle cx="60" cy="58" r="14"/><path d="M26 98l-8 10M94 98l8 10"/></svg>'
+};
+
+function fmt(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽"; }
+function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+
+var current = "Все";
+var grid = document.getElementById("grid");
+var filters = document.getElementById("filters");
+
+function renderFilters() {
+  filters.innerHTML = CATS.map(function (c) {
+    return '<button type="button" class="chip" data-cat="' + esc(c) + '" aria-pressed="' + (c === current) + '">' + esc(c) + "</button>";
+  }).join("");
+}
+
+function renderGrid() {
+  var list = PRODUCTS.map(function (p, i) { return { p: p, i: i }; }).filter(function (x) {
+    return current === "Все" || x.p.cats.indexOf(current) !== -1;
+  });
+  if (!list.length) { grid.innerHTML = '<p class="empty">В этой категории пока нет товаров.</p>'; return; }
+  grid.innerHTML = list.map(function (x) {
+    var p = x.p;
+    var tag = p.cats.length > 3 ? "Универсальное" : p.cats[0];
+    var specs = p.specs.map(function (line) {
+      var k = line.indexOf(":");
+      var label = k === -1 ? "" : line.slice(0, k).trim();
+      var val = k === -1 ? line : line.slice(k + 1).trim();
+      return "<div><dt>" + esc(label) + "</dt><dd>" + esc(val) + "</dd></div>";
+    }).join("");
+    var pic = p.photo
+      ? '<img class="ph" src="' + esc(p.photo) + '" alt="' + esc(p.name) + '" loading="lazy" data-art="' + esc(p.art || "glove") + '">'
+      : ART[p.art] || ART.glove;
+    return '<article class="card"><div class="pic"><span class="tag">' + esc(tag) + "</span>" + pic + "</div>" +
+      '<div class="body"><h2>' + esc(p.name) + '</h2><dl class="specs">' + specs + "</dl>" +
+      '<div class="buy"><span class="price">' + fmt(p.price) + '</span><button type="button" class="btn" data-i="' + x.i + '">Заказать</button></div></div></article>';
+  }).join("");
+  grid.querySelectorAll("img.ph").forEach(function (img) {
+    img.addEventListener("error", function () {
+      var holder = document.createElement("div");
+      holder.innerHTML = ART[img.getAttribute("data-art")] || ART.glove;
+      img.replaceWith(holder.firstChild);
+    });
+  });
+}
+
+filters.addEventListener("click", function (e) {
+  var b = e.target.closest(".chip");
+  if (!b) return;
+  current = b.getAttribute("data-cat");
+  renderFilters();
+  renderGrid();
+});
+
+var overlay = document.getElementById("overlay");
+var lastFocus = null;
+function openPanel(i) {
+  var p = PRODUCTS[i];
+  document.getElementById("pTitle").textContent = p.name;
+  document.getElementById("pSum").textContent = "Цена " + fmt(p.price) + ". Назовите эту модель и нужный размер.";
+  overlay.hidden = false;
+  document.getElementById("hint").textContent = "Если звонок не открылся, наберите номер вручную.";
+  document.getElementById("copyBtn").textContent = "Скопировать номер";
+  lastFocus = document.activeElement;
+  document.getElementById("closeBtn").focus();
+}
+function closePanel() { overlay.hidden = true; if (lastFocus) lastFocus.focus(); }
+
+grid.addEventListener("click", function (e) {
+  var b = e.target.closest(".btn");
+  if (b) openPanel(+b.getAttribute("data-i"));
+});
+document.getElementById("closeBtn").addEventListener("click", closePanel);
+overlay.addEventListener("click", function (e) { if (e.target === overlay) closePanel(); });
+document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !overlay.hidden) closePanel(); });
+
+document.getElementById("copyBtn").addEventListener("click", function () {
+  var btn = this;
+  function done() { btn.textContent = "Номер скопирован"; }
+  function fallback() {
+    var r = document.createRange();
+    r.selectNodeContents(document.getElementById("pNum"));
+    var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    document.getElementById("hint").textContent = "Номер выделен, скопируйте его вручную.";
+  }
+  try {
+    navigator.clipboard.writeText(PHONE).then(done, fallback);
+  } catch (err) { fallback(); }
+});
+
+document.getElementById("pNum").textContent = PHONE;
+document.getElementById("pCall").setAttribute("href", "tel:" + PHONE_RAW);
+document.getElementById("topPhone").setAttribute("href", "tel:" + PHONE_RAW);
+document.getElementById("topPhone").textContent = PHONE;
+
+document.title = SHOP + " экипировка";
+document.querySelector(".brand").firstChild.textContent = SHOP;
+
+renderFilters();
+renderGrid();
+</script>
+
+</body>
+</html>
